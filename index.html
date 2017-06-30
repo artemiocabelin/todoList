@@ -17,16 +17,33 @@
         </ul>
         <form v-on:submit.prevent="addItem">
             <input type="text" v-model="task" id="task" placeholder="Type your task here...">
+            <label for="due">Due Date: </label>
+            <input type="date" v-model="due" id="due">
             <button  id="submit">Add Task</button>
         </form>
+
+
         <div id="nav-bar">
-            <button class="nav">Pending</button>
-            <button class="nav">Done</button>
+            <button class="nav" v-on:click="showIncomplete">Incomplete</button>
+            <button class="nav" v-on:click="showComplete">Complete</button>
         </div>
+
+
+
+
         <div id="content">
-            <div class="c_row" v-for="item in todoList">
-                <li><span v-bind:class="{ crossout : item.status }">{{ item.task }}</span> <button v-on:click="completeTask(item.id)">complete</button><button v-on:click="deleteTask(item.id)">delete</button></li>
+            <div class="c_row" v-bind:class="{ view : view }">
+
+                <h1>Incomplete</h1>
+                <ul v-for="item in todoList" v-if="!item.status">
+                    <li class="list"><span v-bind:class="{ crossout : item.status }">{{ item.task }} {{ item.due }}</span><input v-bind:class="{ view : !item.dateView}" type="date" v-model="item.due" id="due"><button v-on:click="editDate(item.id)">Edit Due Date</button><button v-on:click="completeTask(item.id)">complete</button><button v-on:click="deleteTask(item.id)">delete</button></li>
+                </ul>
             </div>
+            <div class="c_row" v-bind:class="{ view : !view }">
+                <h1>Complete</h1>
+                <ul v-for="item in todoList" v-if="item.status">
+                    <li class="list"><span v-bind:class="{ crossout : item.status }">{{ item.task }}</span> <button v-on:click="completeTask(item.id)">incomplete</button><button v-on:click="deleteTask(item.id)">delete</button></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -36,12 +53,14 @@
 
     var ToDoMaker = (function() {
         var id = 0;
-        return function TodoListItem (task){
+        return function TodoListItem (task,due){
             id += 1;
             this.task = task;
+            this.due = due;
             this.status = false;
             this.id = id;
             this.createdAt = new Date();
+            this.dateView = false;
          }
     }());
 
@@ -53,13 +72,17 @@
             el: '#main',
             data: {
                 task: '',
-                todoList : todoList
+                todoList : todoList,
+                view: false,
+                due: ''
+
             },
             methods: {
                 addItem: function(){
                     // console.log('hello');
-                    todoList.push(new ToDoMaker(this.task));
+                    todoList.push(new ToDoMaker(this.task,this.due));
                     this.task = "";
+                    this.due = "";
                 },
                 deleteTask: function(id) {
                     // console.log('hiii');
@@ -73,7 +96,23 @@
                     // console.log(';sldfj');
                     for (var i=0;i<this.todoList.length;i++) {
                         if (this.todoList[i].id == id) {
-                            this.todoList[i].status = true;
+                            this.todoList[i].status = !this.todoList[i].status;
+                        }
+                    }
+                },
+                showComplete:  function() {
+                    console.log('heeee')
+                    this.view = true;
+                },
+                showIncomplete: function() {
+                    console.log('hooooooo')
+                    this.view = false;
+                },
+                editDate: function(id) {
+                    console.log('wuuuuuuut');
+                    for (var i=0;i<this.todoList.length;i++) {
+                        if (this.todoList[i].id == id) {
+                            this.todoList[i].dateView = !this.todoList[i].dateView;
                         }
                     }
                 }
