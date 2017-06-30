@@ -4,26 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="main.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <title>To Do List</title>
 </head>
 <body>
     <div id="main">
-        <h1>My To Do List:</h1>
-        <table>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>Take out the trash.</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>Clean the room.</td>                
-            </tr>
-        </table>
-        <form>
-            <input type="text" id="task" placeholder="Type your task here...">
-            <button id="submit">Submit</button>
+        <h1 id="title">My To Do List:</h1>
+        <ul class="c_row active">
+            <li>{{ task }}</li>        
+        </ul>
+        <form v-on:submit.prevent="addItem">
+            <input type="text" v-model="task" id="task" placeholder="Type your task here...">
+            <button  id="submit">Add Task</button>
         </form>
+        <div id="nav-bar">
+            <button class="nav">Pending</button>
+            <button class="nav">Done</button>
+        </div>
+        <div id="content">
+            <div class="c_row" v-for="item in todoList">
+                <li><span v-bind:class="{ crossout : item.status }">{{ item.task }}</span> <button v-on:click="completeTask(item.id)">complete</button><button v-on:click="deleteTask(item.id)">delete</button></li>
+            </div>
+            </div>
+        </div>
     </div>
+  
+
+    <script>
+
+    var ToDoMaker = (function() {
+        var id = 0;
+        return function TodoListItem (task){
+            id += 1;
+            this.task = task;
+            this.status = false;
+            this.id = id;
+            this.createdAt = new Date();
+         }
+    }());
+
+
+    var todoList = [];
+
+
+        var app = new Vue({
+            el: '#main',
+            data: {
+                task: '',
+                todoList : todoList
+            },
+            methods: {
+                addItem: function(){
+                    // console.log('hello');
+                    todoList.push(new ToDoMaker(this.task));
+                    this.task = "";
+                },
+                deleteTask: function(id) {
+                    // console.log('hiii');
+                    for (var i=0;i<todoList.length;i++) {
+                        if (todoList[i].id === id) {
+                            todoList.splice(i,1);
+                        }
+                    }
+                },
+                completeTask: function(id) {
+                    // console.log(';sldfj');
+                    for (var i=0;i<this.todoList.length;i++) {
+                        if (this.todoList[i].id == id) {
+                            this.todoList[i].status = true;
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
 </body>
 </html>
