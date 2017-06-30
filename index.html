@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <script type="text/javascript" src="main.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <title>To Do List</title>
@@ -15,34 +16,34 @@
         <ul class="c_row active">
             <li>{{ task }}</li>        
         </ul>
-        <form v-on:submit.prevent="addItem">
+        <form v-on:submit.prevent="addItem" id="some_form">
             <input type="text" v-model="task" id="task" placeholder="Type your task here...">
-            <label for="due">Due Date: </label>
+            <label for="due" >Due Date: </label>
             <input type="date" v-model="due" id="due">
             <button  id="submit">Add Task</button>
         </form>
 
 
+
+
         <div id="nav-bar">
-            <button class="nav" v-on:click="showIncomplete">Incomplete</button>
-            <button class="nav" v-on:click="showComplete">Complete</button>
+            <button class="nav" id="nav-left" v-on:click="showIncomplete" v-bind:class="{ active_view : !view }">Incomplete</button>
+            <button class="nav" v-on:click="showComplete" v-bind:class="{ active_view : view }">Complete</button>
         </div>
-
-
 
 
         <div id="content">
             <div class="c_row" v-bind:class="{ view : view }">
 
-                <h1>Incomplete</h1>
+                <h1 class="header">To Do...</h1>
                 <ul v-for="item in todoList" v-if="!item.status">
-                    <li class="list"><span v-bind:class="{ crossout : item.status }">{{ item.task }} {{ item.due }}</span><input v-bind:class="{ view : !item.dateView}" type="date" v-model="item.due" id="due"><button v-on:click="editDate(item.id)">Edit Due Date</button><button v-on:click="completeTask(item.id)">complete</button><button v-on:click="deleteTask(item.id)">delete</button></li>
+                    <li class="list"><div class="list_distance"><span v-bind:class="{ crossout : item.status }">{{ item.task }} due on {{ item.due }}</span></div><input v-bind:class="{ view : !item.dateView}" type="date" v-model="item.due" id="due"><button v-on:click="editDate(item.id)">Edit Due Date</button><button v-on:click="completeTask(item.id)">complete</button><button v-on:click="deleteTask(item.id)">delete</button></li>
                 </ul>
             </div>
             <div class="c_row" v-bind:class="{ view : !view }">
-                <h1>Complete</h1>
+                <h1 class="header">Done!</h1>
                 <ul v-for="item in todoList" v-if="item.status">
-                    <li class="list"><span v-bind:class="{ crossout : item.status }">{{ item.task }}</span> <button v-on:click="completeTask(item.id)">incomplete</button><button v-on:click="deleteTask(item.id)">delete</button></li>
+                    <li class="list"><div class="list_distance"><span v-bind:class="{ crossout : item.status }">{{ item.task }}</span></div> <button v-on:click="completeTask(item.id)">incomplete</button><button v-on:click="deleteTask(item.id)">delete</button></li>
                 </ul>
             </div>
         </div>

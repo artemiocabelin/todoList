@@ -4,27 +4,71 @@ li {
 }
 
 .list {
-    border-top: 1px solid blue;
-    background: yellow;
+    /*border-top: 1px solid blue;
+    background: yellow;*/
+    margin-top: -24px;
+    margin-left: -30px;
+    line-height: 35px;
+    font-family: 'Indie Flower', cursive;
+}
+
+.list_distance {
+    width: 450px;
+    height: 27px;
+    /* background: yellow; */
+    display: inline-block;
+    text-align: left;
 }
 
 #main {
     /*background: yellow;*/
-    width: 830px;
-    height: 2000px;
+    background: url('notepad.png');
+    width: 948px;
+    height: 1000px;
     margin: 0 auto;
+    background-size: 950px 1000px;
 }
 
 #title {
-    font-family: Arial;
-    text-align: center;
+    font-family: 'Indie Flower', cursive;
+    /* text-align: center; */
+    padding-top: 177px;
+    margin-left: 324px;
+    /* background: blue; */
+    font-size: 44px;
+    width: 270px;
+    padding-bottom: 0px;
 }
 
 #nav-bar {
     margin: 0 auto;
-    /*background: red;*/
-    1px: 106px;
-    height: 20px;
+    /* background: red; */
+    width: ;
+    width: 650px;
+}
+
+.nav {
+    margin-left: 10px;
+    margin-top: 10px;
+    background: none;
+    border: none;
+    font-family: 'Indie Flower';
+    font-size: 20px;
+    text-decoration: underline;
+    color: red;
+}
+
+.header {
+        margin-left: -71px;
+        font-family: 'Indie Flower', cursive;
+}
+
+#nav-left {
+    margin-left: 227px;
+}
+
+#some_form {
+        font-family: 'Indie Flower';
 }
 
 #content, form {
@@ -43,13 +87,16 @@ li {
 }
 
 .c_row {
-    border: 1px solid black;
-    background: white;
-
+    /* border: 1px solid black; */
+    /* background: red; */
+    margin-left: 151px;
+    margin-top: 11px;
+    width: 660px;
 }
 
 form {
-    text-align: center;
+    margin-left: 181px;
+    margin-top: -30px;
 }
 
 #task {
@@ -59,9 +106,13 @@ form {
 }
 
 .active {
-    background: red;
+    /* background: red; */
     height: 30px;
     text-align: center;
+    width: 540px;
+    margin-left: 160px;
+    margin-top: -31px;
+    font-family: 'Indie Flower';
 }
 
 .delete {
@@ -85,10 +136,14 @@ form {
 }
 
 .crossout {
-    background: green;
+    background: yellowgreen;
 }
 
 
 .view {
     display: none;
+}
+
+.active_view {
+    color: green;
 }
